@@ -1,0 +1,170 @@
+<!-- 数独Webアプリ 画面イメージ（レイアウト反映版） -->
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <title>数独</title>
+        <link rel="stylesheet" href="sudoku_layout.css" />
+        <script src="sudoku_ocr.js"></script>
+        <script src="sudoku.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="top-bar">
+                <div class="history-buttons">
+                    <button id="undoBtn">戻る</button>
+                    <button id="redoBtn">進む</button>
+                </div>
+                <!-- 数字色選択ラジオボタン -->
+                <div class="color-select-bar">
+                    <span style="font-size:0.95em;">数字色:</span>
+                    <label><input type="radio" name="numColor" value="color1" checked>色１</label>
+                    <label><input type="radio" name="numColor" value="color2">色２</label>
+                    <label><input type="radio" name="numColor" value="color3">色３</label>
+                </div>
+            </div>
+            <div class="sudoku-area">
+                <div class="sudoku-board">
+                    <!-- 1行目 -->
+                    <div class="cell block-top block-left"></div>
+                    <div class="cell block-top"></div>
+                    <div class="cell block-top"></div>
+                    <div class="cell block-top block-left"></div>
+                    <div class="cell block-top"></div>
+                    <div class="cell block-top"></div>
+                    <div class="cell block-top block-left"></div>
+                    <div class="cell block-top"></div>
+                    <div class="cell block-top block-right"></div>
+                    <!-- 2行目 -->
+                    <div class="cell block-left"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell block-left"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell block-left"></div>
+                    <div class="cell"></div>
+                    <div class="cell block-right"></div>
+                    <!-- 3行目 -->
+                    <div class="cell block-left block-bottom"></div>
+                    <div class="cell block-bottom"></div>
+                    <div class="cell block-right block-bottom"></div>
+                    <div class="cell block-left block-bottom"></div>
+                    <div class="cell block-bottom"></div>
+                    <div class="cell block-right block-bottom"></div>
+                    <div class="cell block-left block-bottom"></div>
+                    <div class="cell block-bottom"></div>
+                    <div class="cell block-right block-bottom"></div>
+                    <!-- 4行目 -->
+                    <div class="cell block-top block-left"></div>
+                    <div class="cell block-top"></div>
+                    <div class="cell block-top"></div>
+                    <div class="cell block-top block-left"></div>
+                    <div class="cell block-top"></div>
+                    <div class="cell block-top"></div>
+                    <div class="cell block-top block-left"></div>
+                    <div class="cell block-top"></div>
+                    <div class="cell block-top block-right"></div>
+                    <!-- 5行目 -->
+                    <div class="cell block-left"></div>
+                    <div class="cell"></div>
+                    <div class="cell block-right"></div>
+                    <div class="cell block-left"></div>
+                    <div class="cell"></div>
+                    <div class="cell block-right"></div>
+                    <div class="cell block-left"></div>
+                    <div class="cell"></div>
+                    <div class="cell block-right"></div>
+                    <!-- 6行目 -->
+                    <div class="cell block-left block-bottom"></div>
+                    <div class="cell block-bottom"></div>
+                    <div class="cell block-bottom"></div>
+                    <div class="cell block-bottom block-left"></div>
+                    <div class="cell block-bottom"></div>
+                    <div class="cell block-bottom"></div>
+                    <div class="cell block-bottom block-left"></div>
+                    <div class="cell block-bottom"></div>
+                    <div class="cell block-bottom block-right"></div>
+                    <!-- 7行目 -->
+                    <div class="cell block-left block-top"></div>
+                    <div class="cell block-top"></div>
+                    <div class="cell block-right block-top"></div>
+                    <div class="cell block-left block-top"></div>
+                    <div class="cell block-top"></div>
+                    <div class="cell block-right block-top"></div>
+                    <div class="cell block-left block-top"></div>
+                    <div class="cell block-top"></div>
+                    <div class="cell block-right block-top"></div>
+                    <!-- 8行目 -->
+                    <div class="cell block-left"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell block-left"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell block-left"></div>
+                    <div class="cell"></div>
+                    <div class="cell block-right"></div>
+                    <!-- 9行目 -->
+                    <div class="cell block-left block-bottom"></div>
+                    <div class="cell block-bottom"></div>
+                    <div class="cell block-right block-bottom"></div>
+                    <div class="cell block-left block-bottom"></div>
+                    <div class="cell block-bottom"></div>
+                    <div class="cell block-right block-bottom"></div>
+                    <div class="cell block-left block-bottom"></div>
+                    <div class="cell block-bottom"></div>
+                    <div class="cell block-right block-bottom"></div>
+                </div>
+                <div class="mode-bar">
+                    <div class="mode-toggle">
+                        <label id="fixedModeLabel" style="display: none; margin-right: 10px">
+                            <input type="checkbox" id="fixedModeCheckbox" title="ON中は入力した数字を初期値（固定数字）として設定します" /> 固定
+                        </label>
+                        <span class="toggle-label">自動</span>
+                        <button class="toggle-btn" id="autoInputBtn"><span class="circle"></span></button>
+                        <span class="toggle-label">仮置き</span>
+                        <button class="toggle-btn" id="pencilModeBtn"><span class="circle"></span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="number-buttons">
+                <button class="number-btn">1</button>
+                <button class="number-btn">2</button>
+                <button class="number-btn">3</button>
+                <button class="number-btn">4</button>
+                <button class="number-btn">5</button>
+                <button class="number-btn">6</button>
+                <button class="number-btn">7</button>
+                <button class="number-btn">8</button>
+                <button class="number-btn">9</button>
+            </div>
+            <hr />
+            <div class="save-bar">
+                <div class="save-buttons">
+                    <button id="saveProgressBtn">進捗保存</button>
+                    <button id="loadProgressBtn">進捗読込</button>
+                    <button id="saveInitialBtn">初期値保存</button>
+                    <button id="loadInitialBtn">初期値読込</button>
+                    <input type="file" class="file-input" />
+                </div>
+                <div class="newgame-bar">
+                    <button id="newGameBtn">新規作成</button>
+                    <button id="resetBoardBtn">リセット</button>
+                    <button id="ocrBtn" style="display: none">画像読込</button>
+                    <button id="startGameBtn" style="display: none">ゲーム開始</button>
+                    <!-- 削除：固定数字モードラベルの重複（mode-bar側のみ残す） -->
+                </div>
+                <div class="ocr-preset-bar">
+                    <label for="ocrPresetSelect" style="font-size:0.95em;">OCR:</label>
+                    <select id="ocrPresetSelect">
+                        <option value="auto" selected>自動</option>
+                        <option value="smartphone">スマホ撮影</option>
+                        <option value="screenshot">スクショ</option>
+                    </select>
+                </div>
+            </div>
+            <div class="message">ここにメッセージが表示されます</div>
+        </div>
+    </body>
+</html>
