@@ -1,4 +1,14 @@
 /* sudoku_layout.css */
+:root {
+  --num-fsize: 26px;
+  --num-memo-fsize: 10px;
+  --num-color1: #4a90e2;
+  --num-color2: #a11bb8;
+  --num-color3: #9c9700;
+  --num-memo-color1: #4a90e2aa;
+  --num-memo-color2: #a11bb8aa;
+  --num-memo-color3: #9c9700aa;
+}
 
 body {
     background: #eaf6ee;
@@ -35,22 +45,22 @@ body {
     color: #333;
 }
 .cell.num-color1.input {
-    color: #4a90e2;
+    color: var(--num-color1);
 }
 .memo span.memo-color1 {
-    color: #7ec3ff;
+    color: var(--num-memo-color1);
 }
 .cell.num-color2.input {
-    color: #a11bb8;
+    color: var(--num-color2);
 }
 .memo span.memo-color2 {
-    color: #bc4ae2;
+    color: var(--num-memo-color2);
 }
 .cell.num-color3.input {
-    color: #9c9700;
+    color: var(--num-color3);
 }
 .memo span.memo-color3 {
-    color: #bab700;
+    color: var(--num-memo-color3);
 }
 .history-buttons {
     display: flex;
@@ -90,7 +100,7 @@ body {
     background: #f7f6f2;
     border: 1px solid #b7d7c9;
     text-align: center;
-    font-size: 20px;
+    font-size: var(--num-fsize);
     line-height: 36px;
     cursor: pointer;
     position: relative;
@@ -144,9 +154,9 @@ body {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     gap: 0;
-    width: 30px;
-    height: 30px;
-    font-size: 10px;
+    width: 32px;
+    height: 32px;
+    font-size: var(--num-memo-fsize);
     color: #7ec3ff;
     font-weight: normal;
     pointer-events: none;
@@ -173,13 +183,13 @@ body {
 .number-buttons {
     display: flex;
     justify-content: center;
-    gap: 12px;
+    gap: 4px;
     margin: 16px 0 10px 0;
 }
 .number-btn {
     width: 38px;
     height: 38px;
-    font-size: 1.1em;
+    font-size: var(--num-fsize);
     cursor: pointer;
     border-radius: 6px;
     border: 1.5px solid #b7d7c9;
@@ -293,3 +303,4 @@ body {
 .file-input {
     display: none;
 }
+
