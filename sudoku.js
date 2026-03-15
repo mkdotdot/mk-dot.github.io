@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		return cells.map(cell => {
 			const memo = getMemoDiv(cell);
 			return {
-				text: cell.textContent || '',
+				text: getCellNumber(cell),
 				fixed: cell.classList.contains('fixed'),
 				cellColor: getCellColorClass(cell),
 				memo: memo ? Array.from(memo.children).map(span => span.textContent || '') : null,
@@ -555,16 +555,19 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 
-	// 数字ボタン: 選択状態更新＋選択セルに入力
+	// 数字ボタン: 選択状態更新＋（自動入力OFFの時のみ）選択セルに入力
 	numberButtons.forEach(btn => {
 		btn.addEventListener('click', () => {
 			const num = btn.textContent;
 			selectedNumber = num;
 			setNumberButtonSelection(num);
-			if (!selectedCell) return;
-			if (putNumber(selectedCell, num)) {
-				highlightRowCol(selectedCell);
-				saveHistory();
+			// 自動入力モードOFFの時のみ、数字ボタン押下で即座に入力
+			if (!autoInputMode) {
+				if (!selectedCell) return;
+				if (putNumber(selectedCell, num)) {
+					highlightRowCol(selectedCell);
+					saveHistory();
+				}
 			}
 		});
 	});
