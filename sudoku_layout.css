@@ -264,8 +264,13 @@ button:disabled {
 }
 .save-buttons {
     display: flex;
-    gap: 10px;
+    gap: 20px;
     margin: 8px 0;
+    justify-content: center;
+}
+.save-slot {
+    display: flex;
+    gap: 10px;
 }
 .save-buttons button {
     min-width: 50px;

@@ -17,8 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	const ocrBtn = document.getElementById('ocrBtn');
 	const undoBtn = document.getElementById('undoBtn');
 	const redoBtn = document.getElementById('redoBtn');
-	const saveProgressBtn = document.getElementById('saveProgressBtn');
-	const loadProgressBtn = document.getElementById('loadProgressBtn');
+	const saveProgressBtn1 = document.getElementById('saveProgressBtn1');
+	const loadProgressBtn1 = document.getElementById('loadProgressBtn1');
+	const saveProgressBtn2 = document.getElementById('saveProgressBtn2');
+	const loadProgressBtn2 = document.getElementById('loadProgressBtn2');
 	const saveInitialBtn = document.getElementById('saveInitialBtn');
 	const loadInitialBtn = document.getElementById('loadInitialBtn');
 	const ocrPresetSelect = document.getElementById('ocrPresetSelect');
@@ -777,27 +779,29 @@ document.addEventListener('DOMContentLoaded', () => {
 		input.click();
 	});
 
-	// 一時保存機能（LocalStorage）
-	function saveTemporaryBoard() {
-		if (!confirm('現在の盤面を一時保存しますか？')) return;
+	// 一時保存機能（LocalStorage）スロット対応
+	function saveTemporaryBoard(slot) {
+		if (!confirm(`現在の盤面をスロット${slot}に一時保存しますか？`)) return;
 		const state = getBoardState();
-		localStorage.setItem('sudoku_temporary_save', JSON.stringify(state));
-		msg.textContent = '盤面を一時保存しました';
-		loadProgressBtn.disabled = false;
+		const key = `sudoku_temporary_save_${slot}`;
+		localStorage.setItem(key, JSON.stringify(state));
+		msg.textContent = `盤面をスロット${slot}に一時保存しました`;
+		checkTemporarySave();
 	}
 
-	// 一時復元機能（LocalStorage）
-	function loadTemporaryBoard() {
-		if (!confirm('一時保存した盤面を復元しますか？')) return;
-		const saved = localStorage.getItem('sudoku_temporary_save');
+	// 一時復元機能（LocalStorage）スロット対応
+	function loadTemporaryBoard(slot) {
+		if (!confirm(`スロット${slot}の一時保存を復元しますか？`)) return;
+		const key = `sudoku_temporary_save_${slot}`;
+		const saved = localStorage.getItem(key);
 		if (!saved) {
-			msg.textContent = '一時保存されたデータがありません';
+			msg.textContent = `スロット${slot}に一時保存されたデータがありません`;
 			return;
 		}
 		try {
 			const state = JSON.parse(saved);
 			applyBoardState(state);
-			msg.textContent = '盤面を一時復元しました';
+			msg.textContent = `スロット${slot}から盤面を一時復元しました`;
 		} catch (e) {
 			msg.textContent = 'データの復元に失敗しました';
 			console.error(e);
@@ -805,19 +809,19 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	// 一時保存ボタンのイベントリスナー
-	saveProgressBtn.addEventListener('click', saveTemporaryBoard);
+	saveProgressBtn1.addEventListener('click', () => saveTemporaryBoard(1));
+	saveProgressBtn2.addEventListener('click', () => saveTemporaryBoard(2));
 
 	// 一時復元ボタンのイベントリスナー
-	loadProgressBtn.addEventListener('click', loadTemporaryBoard);
+	loadProgressBtn1.addEventListener('click', () => loadTemporaryBoard(1));
+	loadProgressBtn2.addEventListener('click', () => loadTemporaryBoard(2));
 
 	// ページ開始時：一時保存データがあるかチェック
 	function checkTemporarySave() {
-		const saved = localStorage.getItem('sudoku_temporary_save');
-		if (saved) {
-			loadProgressBtn.disabled = false;
-		} else {
-			loadProgressBtn.disabled = true;
-		}
+		const saved1 = localStorage.getItem('sudoku_temporary_save_1');
+		const saved2 = localStorage.getItem('sudoku_temporary_save_2');
+		loadProgressBtn1.disabled = !saved1;
+		loadProgressBtn2.disabled = !saved2;
 	}
 
 	// 初期値（fixedのみ）保存
