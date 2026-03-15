@@ -78,6 +78,10 @@ body {
 .history-buttons button:hover {
     background: #dbead7;
 }
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 .sudoku-area {
     position: relative;
     display: flex;

@@ -143,23 +143,27 @@
             <hr />
             <div class="save-bar">
                 <div class="save-buttons">
-                    <button id="saveProgressBtn">進捗保存</button>
-                    <button id="loadProgressBtn">進捗読込</button>
+                    <button id="saveProgressBtn">一時保存</button>
+                    <button id="loadProgressBtn" disabled>一時復元</button>
+                    <!-- まだ未実装
+                    <button id="saveInitialBtn">進捗保存</button>
+                    <button id="loadInitialBtn">進捗読込</button>
                     <button id="saveInitialBtn">初期値保存</button>
                     <button id="loadInitialBtn">初期値読込</button>
                     <input type="file" class="file-input" />
+                    -->
                 </div>
                 <div class="newgame-bar">
-                    <button id="newGameBtn">新規作成</button>
-                    <button id="resetBoardBtn">リセット</button>
-                    <button id="ocrBtn" style="display: none">画像読込</button>
-                    <button id="startGameBtn" style="display: none">ゲーム開始</button>
+                    <button id="newGameBtn">new</button>
+                    <button id="resetBoardBtn">destroy</button>
+                    <button id="ocrBtn" style="display: none">load image</button>
+                    <button id="startGameBtn" style="display: none">start</button>
                     <!-- 削除：固定数字モードラベルの重複（mode-bar側のみ残す） -->
                 </div>
                 <div class="ocr-preset-bar">
                     <label for="ocrPresetSelect" style="font-size:0.95em;">OCR:</label>
                     <select id="ocrPresetSelect">
-                        <option value="auto" selected>連続</option>
+                        <option value="auto" selected>自動</option>
                         <option value="smartphone">スマホ撮影</option>
                         <option value="screenshot">スクショ</option>
                     </select>
