@@ -125,6 +125,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		cells.forEach(c => c.classList.remove('selected'));
 		cell.classList.add('selected');
 		selectedCell = cell;
+		
+		// 自動入力OFFの場合のみ、セルの確定数字で数字ボタンを強調
+		// 自動入力ONの場合は、数字ボタンの選択状態を変えずに、選択中の数字で強調を更新
+		if (!autoInputMode) {
+			const cellNum = getCellNumber(cell);
+			setNumberButtonSelection(cellNum);
+		}
+		
 		highlightRowCol(cell);
 	}
 
@@ -133,19 +141,29 @@ document.addEventListener('DOMContentLoaded', () => {
 		const idx = getCellIndex(cell);
 		const row = Math.floor(idx / 9);
 		const col = idx % 9;
-		const selectedMemo = getMemoDiv(cell);
-		const selectedValue = !selectedMemo ? getCellNumber(cell) : '';
+		
+		// 自動入力ONの時は selectedNumber を使用、OFFの時はセルの確定数字を使用
+		let selectedValue = '';
+		if (autoInputMode && selectedNumber) {
+			selectedValue = selectedNumber;
+		} else {
+			const selectedMemo = getMemoDiv(cell);
+			selectedValue = !selectedMemo ? getCellNumber(cell) : '';
+		}
+		
 		cells.forEach((c, i) => {
-			c.classList.remove('highlight');
+			c.classList.remove('highlight-row-col');
 			c.classList.remove('same-number');
 			const memo = getMemoDiv(c);
 			if (memo) {
 				Array.from(memo.children).forEach(span => span.classList.remove('same-number'));
 			}
+			// 行・列は常に強調
 			if (Math.floor(i / 9) === row || i % 9 === col) {
-				c.classList.add('highlight');
+				c.classList.add('highlight-row-col');
 			}
-			if (selectedValue && c !== cell) {
+			// 同じ数字を強調（選択中のセルも含める）
+			if (selectedValue) {
 				if (!memo && getCellNumber(c) === selectedValue) {
 					c.classList.add('same-number');
 				}
@@ -559,6 +577,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	numberButtons.forEach(btn => {
 		btn.addEventListener('click', () => {
 			const num = btn.textContent;
+			// 自動入力ONで既に同じ数字が選択されている場合は選択解除
+			if (autoInputMode && selectedNumber === num) {
+				selectedNumber = null;
+				numberButtons.forEach(b => b.classList.remove('selected'));
+				// 選択解除時は強調もクリア
+				if (selectedCell) {
+					highlightRowCol(selectedCell);
+				}
+				return;
+			}
 			selectedNumber = num;
 			setNumberButtonSelection(num);
 			// 自動入力モードOFFの時のみ、数字ボタン押下で即座に入力
@@ -567,6 +595,11 @@ document.addEventListener('DOMContentLoaded', () => {
 				if (putNumber(selectedCell, num)) {
 					highlightRowCol(selectedCell);
 					saveHistory();
+				}
+			} else {
+				// 自動入力ONの場合は、選択セルがあれば強調を更新
+				if (selectedCell) {
+					highlightRowCol(selectedCell);
 				}
 			}
 		});
@@ -582,6 +615,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	autoInputBtn.addEventListener('click', () => {
 		autoInputMode = !autoInputMode;
 		autoInputBtn.classList.toggle('active', autoInputMode);
+		// 自動入力ON時は数字ボタンの選択を解除
+		if (autoInputMode) {
+			selectedNumber = null;
+			numberButtons.forEach(btn => btn.classList.remove('selected'));
+		}
 	});
 
 	// 固定入力モード（初期値作成時のみ利用）

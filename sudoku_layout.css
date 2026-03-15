@@ -107,12 +107,11 @@ body {
     transition: color 0.2s;
     user-select: none;
 }
-.cell.highlight {
+.cell.highlight-row-col {
     background: #e4f0e9;
 }
 .cell.selected {
     background: #cde7d8;
-    font-weight: bold;
 }
 .cell.same-number {
     font-weight: bold;
@@ -162,7 +161,7 @@ body {
     pointer-events: none;
     transform: translate(-50%, -50%);
 }
-.memo span.highlight {
+.memo span.highlight-row-col {
     color: #2a5d4b;
     font-weight: bold;
 }
