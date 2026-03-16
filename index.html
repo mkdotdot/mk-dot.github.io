@@ -16,12 +16,20 @@
                     <button id="undoBtn">戻る</button>
                     <button id="redoBtn">進む</button>
                 </div>
-                <!-- 数字色選択ラジオボタン -->
+                <!-- 数字色選択ボタン -->
                 <div class="color-select-bar">
-                    <span style="font-size:0.95em;">数字色:</span>
-                    <label><input type="radio" name="numColor" value="color1" checked>色１</label>
-                    <label><input type="radio" name="numColor" value="color2">色２</label>
-                    <label><input type="radio" name="numColor" value="color3">色３</label>
+                    <label class="color-button">
+                        <input type="radio" name="numColor" value="color1" checked>
+                        <span>色１</span>
+                    </label>
+                    <label class="color-button">
+                        <input type="radio" name="numColor" value="color2">
+                        <span>色２</span>
+                    </label>
+                    <label class="color-button">
+                        <input type="radio" name="numColor" value="color3">
+                        <span>色３</span>
+                    </label>
                 </div>
             </div>
             <div class="sudoku-area">
