@@ -195,8 +195,8 @@ button:disabled {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     gap: 0;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     font-size: var(--num-memo-fsize);
     color: #7ec3ff;
     font-weight: normal;
@@ -209,6 +209,7 @@ button:disabled {
 }
 .memo span.same-number {
     font-weight: bold;
+    background: #ffebd899;
     transform: scale(1.1);
 }
 .memo span {
