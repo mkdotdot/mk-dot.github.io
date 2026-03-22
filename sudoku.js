@@ -787,7 +787,7 @@ document.addEventListener('DOMContentLoaded', () => {
 						clearCell(cell);
 						if (nums[i]) {
 							cell.textContent = nums[i];
-							cell.classList.add('fixed');
+							cell.classList.add('input');
 							cell.classList.remove('num-color1', 'num-color2', 'num-color3');
 						}
 					});
