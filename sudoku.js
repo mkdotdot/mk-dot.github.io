@@ -849,27 +849,31 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	// 初期値（fixedのみ）保存
-	saveInitialBtn.addEventListener('click', () => {
-		const initial = cells.map(cell => ({
-			text: cell.classList.contains('fixed') ? cell.textContent : '',
-			fixed: !!cell.classList.contains('fixed'),
-			cellColor: getCellColorClass(cell),
-			memo: null
-		}));
-		downloadJson({ type: 'initial', board: initial }, 'sudoku_initial.json');
-	});
+	if (saveInitialBtn) {
+		saveInitialBtn.addEventListener('click', () => {
+			const initial = cells.map(cell => ({
+				text: cell.classList.contains('fixed') ? cell.textContent : '',
+				fixed: !!cell.classList.contains('fixed'),
+				cellColor: getCellColorClass(cell),
+				memo: null
+			}));
+			downloadJson({ type: 'initial', board: initial }, 'sudoku_initial.json');
+		});
+	}
 
 	// 初期値読込（読込値をfixedとして反映）
-	loadInitialBtn.addEventListener('click', () => {
-		readJsonFile(data => {
-			const state = Array.isArray(data)
-				? data.map(v => ({ text: v || '', fixed: !!v, cellColor: 'num-color1', memo: null, memoColor: 'memo-color1' }))
-				: data.board;
-			applyBoardState(state);
-			validateBoard();
-			saveHistory();
+	if (loadInitialBtn) {
+		loadInitialBtn.addEventListener('click', () => {
+			readJsonFile(data => {
+				const state = Array.isArray(data)
+					? data.map(v => ({ text: v || '', fixed: !!v, cellColor: 'num-color1', memo: null, memoColor: 'memo-color1' }))
+					: data.board;
+				applyBoardState(state);
+				validateBoard();
+				saveHistory();
+			});
 		});
-	});
+	}
 
 	// 初期表示: 履歴開始点を保存し、バリデーション実行、初期値設定モードを表示
 	checkTemporarySave();
