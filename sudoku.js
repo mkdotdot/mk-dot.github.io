@@ -344,6 +344,28 @@ document.addEventListener('DOMContentLoaded', () => {
 		historyIndex = index;
 	}
 
+	// 数字ボタンの状態を更新（9個以上あれば視覚的に無効化）
+	function updateNumberButtonStates() {
+		// 各数字の確定数字の個数をカウント（エラーのないものだけ）
+		const count = Array.from({ length: 10 }, () => 0); // 1-9用
+		cells.forEach(cell => {
+			const num = getCellNumber(cell);
+			if (num && !cell.classList.contains('error')) {
+				count[Number(num)]++;
+			}
+		});
+
+		// ボタンの状態を更新
+		numberButtons.forEach(btn => {
+			const num = btn.textContent;
+			if (count[Number(num)] >= 9) {
+				btn.classList.add('visual-disabled');
+			} else {
+				btn.classList.remove('visual-disabled');
+			}
+		});
+	}
+
 	// 重複チェック（行・列・3x3ブロック）とクリア判定
 	function validateBoard() {
 		cells.forEach(cell => cell.classList.remove('error'));
@@ -385,6 +407,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		const complete = cells.every(cell => !!getCellNumber(cell) && !cell.classList.contains('error'));
 		msg.textContent = complete ? '完成！おめでとうございます！' : '';
+		
+		updateNumberButtonStates();
 	}
 
 	// JSONをダウンロード保存

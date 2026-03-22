@@ -157,6 +157,7 @@ button:disabled {
 }
 .cell.same-number {
     font-weight: bold;
+    background: #ffebd899;
 }
 .cell.fixed {
     color: #2a5d4b;
@@ -246,6 +247,10 @@ button:disabled {
 }
 .number-btn:hover {
     background: #dbead7;
+}
+.number-btn.visual-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 .mode-bar {
     display: flex;
