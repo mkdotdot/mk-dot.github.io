@@ -156,24 +156,27 @@ document.addEventListener('DOMContentLoaded', () => {
 		cells.forEach((c, i) => {
 			c.classList.remove('highlight-row-col');
 			c.classList.remove('same-number');
-			const memo = getMemoDiv(c);
-			if (memo) {
-				Array.from(memo.children).forEach(span => span.classList.remove('same-number'));
-			}
+			
 			// 行・列は常に強調
 			if (Math.floor(i / 9) === row || i % 9 === col) {
 				c.classList.add('highlight-row-col');
 			}
+			
 			// 同じ数字を強調（選択中のセルも含める）
 			if (selectedValue) {
-				if (!memo && getCellNumber(c) === selectedValue) {
-					c.classList.add('same-number');
-				}
+				const memo = getMemoDiv(c);
 				if (memo) {
 					const span = memo.children[Number(selectedValue) - 1];
 					if (span && span.textContent === selectedValue) {
 						span.classList.add('same-number');
 					}
+				} else if (getCellNumber(c) === selectedValue) {
+					c.classList.add('same-number');
+				}
+			} else {
+				const memo = getMemoDiv(c);
+				if (memo) {
+					Array.from(memo.children).forEach(span => span.classList.remove('same-number'));
 				}
 			}
 		});
@@ -540,7 +543,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		}
 		renderOcrDebugImage();
-		console.log(`[OCR] ${key === 'original' ? '選択画像' : '2値化画像'}プレビューを更新しました`);
 	}
 
 	function clearOcrDebugImages() {
@@ -794,7 +796,6 @@ document.addEventListener('DOMContentLoaded', () => {
 					const recognizedCount = nums.filter(v => /^[1-9]$/.test(v)).length;
 					setOcrStatus(recognizedCount > 0 ? `画像読込が完了しました（${recognizedCount}マス認識）` : '数字を認識できませんでした');
 				} catch (error) {
-					console.error('[OCR] 高度OCRで失敗', error);
 					setOcrStatus(formatOcrErrorForStatus(error));
 				}
 			};
